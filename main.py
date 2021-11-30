@@ -25,13 +25,19 @@ def generate_starting_inputs():
 
 def run_gen_algo():
     graph_data = []
+
+    # CREATE STARTING POPULATION
     inputs = generate_starting_inputs()
+
+    # START EVOLUTION
     # loop of 10,000 iterations
     for i in range(2000):
         print("RUNNING ITERATION NUMBER", i)
-        # ============
-        # APPLY FITNESS FUNCTION
-        # ============
+
+
+        # =============================================
+        # APPLY FITNESS FUNCTION TO CURRENT POPULATION
+        # =============================================
         # create empty list "outputs" for outputs
         outputs = []
         # for each iteration go through all 1000 different 3 random number combinations of inputs and feed them to the fitness function
@@ -41,9 +47,9 @@ def run_gen_algo():
             outputs.append((f, s))
 
 
-        # ============
-        # SELECTION
-        # ============
+        # =====================
+        # SELECTION OF BEST 100
+        # =====================
         # sort the list of outputs
         outputs.sort()
         # rank according to the largest outcome first
@@ -54,9 +60,10 @@ def run_gen_algo():
         graph_data.append(ranked_outputs[0])
         bestsolutions = ranked_outputs[:100]
 
-        # ============
-        # CROSSOVER
-        # ============
+
+        # =====================
+        # CROSSOVER PREPERATION
+        # =====================
         # get x,y,z out of the best solutions and create lists out of it
         elements1, elements2, elements3 = [],[],[]
         for s in bestsolutions:
@@ -68,12 +75,13 @@ def run_gen_algo():
             #     print(elements)
             #     exit()
 
-        # ============
+        # ==========
         # MUTATION
-        # ============
+        # ==========
         # create new generation of inputs based on the elements of the previously selected 100 best solutions
         new_generation = []
         for i in range(1000):
+            # random.choice = crossover, random.uniform = mutation
             e1 = random.choice(elements1) * random.uniform(0.95, 1.05)
             e2 = random.choice(elements2) * random.uniform(0.95, 1.05)
             e3 = random.choice(elements3) * random.uniform(0.95, 1.05)
